@@ -1,11 +1,12 @@
 const initialUserState = {
     username : '',
     token : '',
-    test : ''
+    test : '',
+    loginStatus : false
 }
 
 const userReducer = (userState = initialUserState, action) => {
-
+    
     switch(action.type) {
 
         case "TEST" :
@@ -17,8 +18,16 @@ const userReducer = (userState = initialUserState, action) => {
         case "GET_AUTH_TOKEN" :
             return {
                 ...userState,
-                token : action.payload
+                token : action.payload,
+                loginStatus :true
             }
+
+        case "LOGOUT" :
+            localStorage.clear();
+            return {
+                ...initialUserState
+            }
+
         default :
             return {
                 ...userState

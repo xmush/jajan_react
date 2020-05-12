@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import HeadSection from '../components/mainPageComponen/HeadSection'
 import {getCategory} from '../redux/actions/globalAction'
+import { doLogout } from '../redux/actions/userAction'
 import { connect } from 'react-redux'
 
 class Main extends React.Component {
@@ -16,6 +17,8 @@ class Main extends React.Component {
             <React.Fragment>
                 <Header 
                 dataCategory = {this.props.category}
+                loginStatus = {this.props.loginStatus}
+                logOut = {this.props.doLogout}
                 />
                 <HeadSection />
                 <Footer />
@@ -26,12 +29,14 @@ class Main extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        category : state.global.category
+        category : state.global.category,
+        loginStatus : state.user.loginStatus
     }
 }
 
 const mapDispatchToProps = {
-    getCategory
+    getCategory,
+    doLogout
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

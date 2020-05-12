@@ -20,22 +20,30 @@ export const doLogin = () => {
 
             const login = await axios.post(mainUrl+'/auth',
                 {username : username,
-                password : password}, {
-                    headers : {
-                        'content-type': 'text/json',
-                        'Access-Control-Allow-Origin' : '*'
-                    }
-                }
+                password : password}
             )
             
-            console.log('ini setelah test login')
             dispatch({
                 type : "GET_AUTH_TOKEN",
                 payload : login.data.token
             })
 
         } catch(eror) {
-            console.error('fail login eror :', eror)
+            console.error('fail login eror : ', eror)
+        }
+    }
+}
+
+export const doLogout = () => {
+    localStorage.clear();
+    return dispatch => {
+        try{
+            dispatch({
+                type : "LOGOUT"
+            })
+        }
+        catch(eror){
+            console.error('fail logout : ', eror)
         }
     }
 }

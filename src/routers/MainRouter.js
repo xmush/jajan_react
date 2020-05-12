@@ -23,6 +23,7 @@ const MainRoutes = () => {
                     <Route exact path= '/product' component={Product} />
                     <Route exact path= '/product-detail/' component={ProductDetail} />
                     <Route exact path= '/login' component={Login} />
+                    <Route exact path= '/daftar' component={Login} />
                     <Route exact path= '/profile' component={Profil} />
                     {/* <Route exact path= '/news-category/:category' component={News} /> */}
                     <Route component={NotFound} />

@@ -1,23 +1,28 @@
 import React from 'react'
-import Header from '../components/Header'
 import { getCategory, handleChange } from '../redux/actions/globalAction'
-import { doLogin } from '../redux/actions/userAction'
+import { Link } from 'react-router-dom'
+import { doLogin, doLogout } from '../redux/actions/userAction'
 import { connect } from 'react-redux'
 
 class Login extends React.Component {
 
+    checkLogin = () => {
+        const is_login = this.props.loginStatus;
+        if (is_login) {
+            localStorage.setItem("isLogin", this.props.loginStatus);
+            localStorage.setItem("_token", this.props.token);
+            this.props.history.push("/");
+        } else {
+            localStorage.clear();
+        }
+    }
     postLogin = async () => {
-        // const loginBefore = this.props.login;
-        // console.log(this.props)
         await this.props.doLogin();
-        // console.log(this.props.login)
-        // const is_login = this.props.login;
-        // if (is_login) {
-        //     this.props.history.push("/profile");
-        // }
+        this.checkLogin()
     };
 
     componentDidMount() {
+        this.checkLogin()
         this.props.getCategory()
         // this.props.handleChange(e)
     }
@@ -60,6 +65,8 @@ const mapStateToProps = (state) => {
     return {
         category : state.global.category,
         inputUsername : state.global.inputUsername,
+        loginStatus : state.user.loginStatus,   
+        token : state.user.token
         // inputUser
     }
 }
@@ -67,7 +74,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     getCategory,
     handleChange,
-    doLogin
+    doLogin,
+    doLogout
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

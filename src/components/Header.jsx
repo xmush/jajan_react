@@ -2,6 +2,47 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Header = (props) => {
+
+    const checkLocalStorage = () => {
+        const localLoginStatus = localStorage.getItem('isLogin')
+        const _token = localStorage.getItem('_token')
+    
+        if (localLoginStatus === "true" && _token != null) {
+            console.log('ini check login sts',localLoginStatus)
+            return localLoginStatus
+        } 
+    }
+
+    const actionLogout = () => {
+        console.log('try log out')
+        localStorage.clear();
+        props.logOut()       
+    }
+    const LoginLogout =() => {
+        const localStrg = (checkLocalStorage()) ? true : false
+        console.log('local storage : ',localStrg, props.loginStatus)
+        if (!props.loginStatus && !localStrg) {
+            return (
+                <React.Fragment>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/login">Login</Link>
+                    </li>
+                </React.Fragment>
+            )
+        } else {
+           return  (
+                <React.Fragment>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/login"
+                        onClick = {actionLogout}
+                        >Logout</Link>
+                    </li>
+                </React.Fragment>
+            )
+    
+        }
+            
+    }
     console.log('ini console di Header : ', props.dataCategory)
     return(
         <React.Fragment>
@@ -35,15 +76,12 @@ const Header = (props) => {
                                     <Link to={`/category/${elem.id}`} className="dropdown-item" key={index}>{elem.name}</Link>
                                 ))
                             }
-                            {/* <Link className="dropdown-item" to="#">Action</Link>
-                            <Link className="dropdown-item" to="#">Another action</Link>
-                            <div className="dropdown-divider"></div>
-                            <Link className="dropdown-item" to="#">Something else here</Link> */}
                             </div>
                         </li>
-                        <li className="nav-item">
+                        <LoginLogout />
+                        {/* <li className="nav-item">
                             <Link className="nav-link" to="/login">Login</Link>
-                        </li>
+                        </li> */}
                         </ul>
                     </div>
                 </nav>
