@@ -40,6 +40,11 @@ class Login extends React.Component {
                             <div className="checkbox mb-3">
                             </div>
                             <button className="btn btn-lg btn-danger btn-block"  onClick={() => this.postLogin()} type="button">Sign in</button>
+
+                            <div className="btn-group bg-pastel-red mt-3 w-100" role="group" aria-label="Basic example">
+                                <Link to="/" type="button" className="btn text-white bg-pastel-red">&laquo; Home</Link>
+                                <Link to="/daftar" type="button" className="btn text-white bg-pastel-red">Daftar &raquo;</Link>
+                            </div>
                             <p className="mt-5 mb-3 text-white">xmush &copy; 2020</p>
                         </form>    
                     </div>

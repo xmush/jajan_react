@@ -52,9 +52,9 @@ const HeadSection = () => {
                     </div>    
                     <div className="col-lg-6">
                     <div className="row mt-4">
-                        {[1,2,3,4].map((elem) => (
+                        {[1,2,3,4].map((elem, index) => (
                         
-                        <div className="col-lg-6 col-md-6 my-2">
+                        <div className="col-lg-6 col-md-6 my-2" key={index}>
                             <div className="card h-100">
                                 <Link to="#"><img className="card-img-top" src="http://placehold.it/700x400" alt="" /></Link>
                                 <div className="card-footer">

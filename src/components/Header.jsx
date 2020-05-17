@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 
 const Header = (props) => {
 
+    const dataUser = JSON.parse(localStorage.getItem('dataUser'))
+    // console.log('ini local data user ',dataUser)
     const checkLocalStorage = () => {
         const localLoginStatus = localStorage.getItem('isLogin')
         const _token = localStorage.getItem('_token')
@@ -32,10 +34,23 @@ const Header = (props) => {
         } else {
            return  (
                 <React.Fragment>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/login"
-                        onClick = {actionLogout}
-                        >Logout</Link>
+                    <li className="nav-item dropdown">
+                        <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i className="fas fa-user-circle fa-lg"></i> {dataUser.username}
+                        </div>
+                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <Link className="dropdown-item" to="/product/add"
+                            >Add Produk</Link>
+                            <Link className="dropdown-item" to="/transaction"
+                            >Transaction</Link>
+                            <Link className="dropdown-item" to="/login"
+                            onClick = {actionLogout}
+                            >Logout</Link>
+                            <Link className="dropdown-item" to="/profile"
+                            >
+                                Profil
+                            </Link>
+                        </div>
                     </li>
                 </React.Fragment>
             )
@@ -48,7 +63,7 @@ const Header = (props) => {
         <React.Fragment>
             <header className="d-flex align-items-center font-weight-bold">
                 <nav className="navbar navbar-expand-lg navbar-dark bg-pastel-red fixed-top">
-                    <Link className="navbar-brand" to="#">
+                    <Link className="navbar-brand" to="/">
                     <img src="img/logo/O2store.png" className="logo" alt="" />
                     O2 Store
                     </Link>
@@ -61,10 +76,16 @@ const Header = (props) => {
                         </form>
                         <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
-                            <Link className="nav-link" to="#"><i className="fas fa-shopping-cart"></i></Link>
+                            <Link className="nav-link" to="/cart">
+                                <div className="d-flex align-items-center flex-row">
+                                    <i className="fas fa-shopping-cart d-inline">
+                                    </i>
+                                    <span className="badge badge-danger ml-2">{props.cartLength}</span>
+                                </div>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="#">Product</Link>
+                            <Link className="nav-link" to="/product">Product</Link>
                         </li>
                         <li className="nav-item dropdown">
                             <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

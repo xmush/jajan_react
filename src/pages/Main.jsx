@@ -19,6 +19,7 @@ class Main extends React.Component {
                 dataCategory = {this.props.category}
                 loginStatus = {this.props.loginStatus}
                 logOut = {this.props.doLogout}
+                dataUser = {this.props.dataUser}
                 />
                 <HeadSection />
                 <Footer />
@@ -30,7 +31,8 @@ class Main extends React.Component {
 const mapStateToProps = (state) => {
     return {
         category : state.global.category,
-        loginStatus : state.user.loginStatus
+        loginStatus : state.user.loginStatus,
+        dataUser : state.user.dataUser
     }
 }
 

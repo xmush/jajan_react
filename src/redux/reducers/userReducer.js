@@ -2,7 +2,9 @@ const initialUserState = {
     username : '',
     token : '',
     test : '',
-    loginStatus : false
+    isRegister : false,
+    loginStatus : false,
+    dataUser : {}
 }
 
 const userReducer = (userState = initialUserState, action) => {
@@ -20,6 +22,18 @@ const userReducer = (userState = initialUserState, action) => {
                 ...userState,
                 token : action.payload,
                 loginStatus :true
+            }
+
+        case "REGISTER_USER" :
+            return {
+                ...userState,
+                isRegister : true
+            }
+
+        case "GET_USER_DATA" :
+            return {
+                ...userState,
+                dataUser : action.payload
             }
 
         case "LOGOUT" :

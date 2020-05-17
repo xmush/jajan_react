@@ -1,13 +1,13 @@
 import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import HeadSection from '../components/productComponen/HeadSection'
-import { getCategory, doGetProduct, addProductToCart, hideSwal, getUserCart } from '../redux/actions/globalAction'
+import HeadSection from '../components/cartComponent/HeadSection'
+import { getCategory, doGetProduct, editUserCart, hideSwal, getUserCart, deleteUserCart, checkOutUserCart} from '../redux/actions/globalAction'
 import { doLogout } from '../redux/actions/userAction'
 import { connect } from 'react-redux'
 import Swal from 'sweetalert2'
 
-class Product extends React.Component {
+class Cart extends React.Component {
 
     checkAddToChart = async () => {
         if(this.props.showAlert) {
@@ -17,7 +17,7 @@ class Product extends React.Component {
                 icon: 'success',
                 confirmButtonText: 'Ok'
             }).then((result) => {
-                this.props.history.replace("/");
+                this.props.history.replace("/cart");
             }).then(() => {
                 this.props.hideSwal()
             })
@@ -29,7 +29,7 @@ class Product extends React.Component {
                 icon: 'error',
                 confirmButtonText: 'Ok'
             }).then(() => {
-                this.props.history.replace("/");
+                this.props.history.replace("/cart");
             }).then(() => {
                 this.props.hideSwal()
             })
@@ -37,13 +37,13 @@ class Product extends React.Component {
     }
     
 
-    cartIsClicked = async (productId, productName, productStock) => {
+    cartIsClicked = async (productId, productName, productStock, qty, cartId) => {
         await Swal.fire({
             title: `${productName}`,
             html:
               'Note : <input type="text" id="note" class="swal2-input" placeholder="note untuk penjual">Qty' +
-              `<input type="range" min=1 max=${productStock} id="produkQty" value=1 class="swal2-input" oninput="produkOutQty.value = produkQty.value">`+
-              '<output name="produkOutQty" id="produkOutQty">1</output>',
+              `<input type="range" min=1 max=${productStock} id="produkQty" value=${qty} class="swal2-input" oninput="produkOutQty.value = produkQty.value">`+
+              `<output name="produkOutQty" id="produkOutQty">${qty}</output>`,
             focusConfirm: false,
             showCancelButton: true,
             confirmButtonText : 'Add to cart',
@@ -51,7 +51,7 @@ class Product extends React.Component {
                 const note = document.getElementById('note').value
                 const qty = document.getElementById('produkQty').value
                 // this.showAlert()
-                await this.props.addProductToCart(note, qty, productId)
+                await this.props.editUserCart(note, qty, productId, cartId)
                 // await this.props.addProductToCart(note, qty, productId)
                 
                 return {
@@ -64,15 +64,19 @@ class Product extends React.Component {
         this.checkAddToChart()
         
     }
-    shouldComponentUpdate() {
-        return false
-    }
-
-
+    
     componentDidMount() {
         this.props.getCategory()
         this.props.doGetProduct()
         this.props.getUserCart()
+    }
+
+    shouldComponentUpdate(prevProps) {
+        if(prevProps !== this.props) {
+            return true
+        }
+        // else if ()
+        return false
     }
 
     render() {
@@ -87,8 +91,10 @@ class Product extends React.Component {
                 />
                 <HeadSection
                 showSpin = {this.props.showSpin}
-                dataProduct = {this.props.dataProduct}
+                dataCart = {this.props.cartLength}
                 cartIsClicked = {this.cartIsClicked}
+                deleteUserCart = {this.props.deleteUserCart}
+                checkOutUserCart = {this.props.checkOutUserCart}
                 
                 />
                 <Footer />
@@ -113,10 +119,12 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     getCategory,
     doGetProduct,
-    addProductToCart,
+    editUserCart,
     hideSwal,
     getUserCart,
+    deleteUserCart,
+    checkOutUserCart,
     doLogout
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Product);
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

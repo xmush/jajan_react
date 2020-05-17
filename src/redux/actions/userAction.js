@@ -23,9 +23,20 @@ export const doLogin = () => {
                 password : password}
             )
             
+            // console.log("user_id ini => ", login.data)
             dispatch({
                 type : "GET_AUTH_TOKEN",
                 payload : login.data.token
+            })
+
+            // request user profil data
+            const user_id = login.data.id
+            const userData = await axios.get(mainUrl+'/user/'+user_id)
+
+            localStorage.setItem('dataUser', JSON.stringify(userData.data))
+            dispatch({
+                type : "GET_USER_DATA",
+                payload : userData.data
             })
 
         } catch(eror) {
@@ -46,4 +57,26 @@ export const doLogout = () => {
             console.error('fail logout : ', eror)
         }
     }
+}
+
+export const doRegister = (props, getState) => {
+    return async (dispatch, getState) => {
+        
+        const data = {
+            username : getState().global.regisUsername,
+            password : getState().global.regisPassword,
+            email : getState().global.regisEmail,
+            fullname : getState().global.regisFullname,
+            address : getState().global.regisAddress,
+            contact : getState().global.regisContact,
+            sex : getState().global.regisGender
+        }
+        const register = await axios.post(mainUrl+'/registration', data)
+        
+        console.log(register.data)
+        dispatch({
+            type : "REGISTER_USER"
+        })
+    }
+    // const state = getState()
 }
