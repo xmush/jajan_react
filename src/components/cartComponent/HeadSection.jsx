@@ -95,11 +95,11 @@ const HeadSection = (props) => {
                                 </div>
                             </div>
                             <div className="mt-2">
-                                <button type="button" className="btn btn-info"
+                                <Link type="button" className="btn btn-info" to="/transaction"
                                 onClick={props.checkOutUserCart}
                                 >
                                     CheckOut
-                                </button>
+                                </Link>
                             </div>
                         </div>
                 

@@ -95,7 +95,7 @@ export const doGetProduct = () => {
                 type : "DO_SPIN"
             })
 
-            const listProduct = await axios.get(mainUrl+'/user/product/list?p=1&rp=10')
+            const listProduct = await axios.get(mainUrl+'/user/product/list?p=1&rp=50')
 
             console.log('response list produck',listProduct.data)
 
@@ -295,4 +295,30 @@ export const getDataTransaction = () => {
 
 
     } 
+}
+
+export const getDataByCategory = (categoryID) => {
+    return async (dispatch) => {
+        try {
+            dispatch({
+                type : "DO_SPIN"
+            })
+
+            const listProduct = await axios.get(mainUrl+'/user/product/category/'+categoryID)
+
+            console.log('response list produck',listProduct.data)
+
+            dispatch({
+                type : "GET_DATA_PRODUCT",
+                payload : listProduct.data
+                
+            })
+
+            dispatch({
+                type : "STOP_SPIN"
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    }
 }

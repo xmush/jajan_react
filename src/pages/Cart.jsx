@@ -71,13 +71,13 @@ class Cart extends React.Component {
         this.props.getUserCart()
     }
 
-    shouldComponentUpdate(prevProps) {
-        if(prevProps !== this.props) {
-            return true
-        }
-        // else if ()
-        return false
-    }
+    // shouldComponentUpdate(prevProps) {
+    //     if(prevProps !== this.props) {
+    //         return true
+    //     }
+    //     // else if ()
+    //     return false
+    // }
 
     render() {
         return(

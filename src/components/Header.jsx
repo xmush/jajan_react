@@ -94,7 +94,9 @@ const Header = (props) => {
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                             {
                                 props.dataCategory.map((elem, index) =>(
-                                    <Link to={`/category/${elem.id}`} className="dropdown-item" key={index}>{elem.name}</Link>
+                                    <Link to={`/category/${elem.id}`} className="dropdown-item" key={index}
+                                    onClick={() => props.getDataByCategory(elem.id)}
+                                    >{elem.name}</Link>
                                 ))
                             }
                             </div>

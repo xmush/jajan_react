@@ -2,7 +2,7 @@ import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import HeadSection from '../components/productComponen/HeadSection'
-import { getCategory, doGetProduct, addProductToCart, hideSwal, getUserCart } from '../redux/actions/globalAction'
+import { getCategory, doGetProduct, addProductToCart, hideSwal, getUserCart, getDataByCategory } from '../redux/actions/globalAction'
 import { doLogout } from '../redux/actions/userAction'
 import { connect } from 'react-redux'
 import Swal from 'sweetalert2'
@@ -17,7 +17,7 @@ class Product extends React.Component {
                 icon: 'success',
                 confirmButtonText: 'Ok'
             }).then((result) => {
-                this.props.history.replace("/");
+                this.props.history.replace("/cart");
             }).then(() => {
                 this.props.hideSwal()
             })
@@ -29,7 +29,7 @@ class Product extends React.Component {
                 icon: 'error',
                 confirmButtonText: 'Ok'
             }).then(() => {
-                this.props.history.replace("/");
+                this.props.history.replace("/cart");
             }).then(() => {
                 this.props.hideSwal()
             })
@@ -64,9 +64,9 @@ class Product extends React.Component {
         this.checkAddToChart()
         
     }
-    shouldComponentUpdate() {
-        return false
-    }
+    // shouldComponentUpdate() {
+    //     return false
+    // }
 
 
     componentDidMount() {
@@ -82,8 +82,10 @@ class Product extends React.Component {
                 dataCategory = {this.props.category}
                 loginStatus = {this.props.loginStatus}
                 logOut = {this.props.doLogout}
+                getDataByCategory = {this.props.getDataByCategory}
                 dataUser = {this.props.dataUser}
                 cartLength = {this.props.cartLength.length}
+
                 />
                 <HeadSection
                 showSpin = {this.props.showSpin}
@@ -116,6 +118,7 @@ const mapDispatchToProps = {
     addProductToCart,
     hideSwal,
     getUserCart,
+    getDataByCategory,
     doLogout
 }
 
