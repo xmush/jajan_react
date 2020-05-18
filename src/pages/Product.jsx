@@ -9,7 +9,17 @@ import Swal from 'sweetalert2'
 
 class Product extends React.Component {
 
+    checkIsLogin = () => {
+        // if(localStorage.)
+        const isLogin = localStorage.getItem('isLogin')
+        if (isLogin !== 'true') {
+            this.props.history.push('/login')
+        } 
+
+    }
+
     checkAddToChart = async () => {
+        this.checkIsLogin()
         if(this.props.showAlert) {
             await Swal.fire({
                 title: 'Success!',
